@@ -63,4 +63,5 @@ class OpenCVCapture(object):
         return frame
 
     def stop(self):
+        pass
         # noop

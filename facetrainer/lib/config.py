@@ -34,10 +34,10 @@ HAAR_MIN_SIZE = (30, 30)
 
 def get_camera():
     try:
-        import picam
+        import lib.picam as picam
         capture = picam.OpenCVCapture()
         capture.start()
         return capture
     except Exception:
-        import webcam
+        import lib.webcam as webcam
         return webcam.OpenCVCapture(device_id=0)

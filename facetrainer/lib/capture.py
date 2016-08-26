@@ -15,12 +15,12 @@ import sys
 
 import cv2
 
-import config
-import face
+import lib.config as config
+import lib.face as face
 
 
 def is_letter_input(letter):
-    input_char = raw_input()
+    input_char = input()
     return input_char.lower()
 
 
@@ -45,21 +45,20 @@ def capture():
     if len(files) > 0:
         # Grab the count from the last filename.
         count = int(files[-1][-7:-4]) + 1
-    print 'Capturing positive training images.'
-    print 'Press enter to capture an image.'
-    print 'Press Ctrl-C to quit.'
+    print('Capturing positive training images.')
+    print('Press enter to capture an image.')
+    print('Press Ctrl-C to quit.')
     while True:
         try:
-            raw_input()
-            print 'Capturing image...'
+            input()
+            print('Capturing image...')
             image = camera.read()
             # Convert image to grayscale.
             image = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             # Get coordinates of single face in captured image.
             result = face.detect_single(image)
             if result is None:
-                print 'Could not detect single face!  Check the image in capture.pgm' \
-                        ' to see what was captured and try again with only one face visible.'
+                print('Could not detect single face!  Check the image in capture.pgm to see what was captured and try again with only one face visible.')
                 continue
             x, y, w, h = result
             # Crop image as close as possible to desired face aspect ratio.
@@ -68,7 +67,7 @@ def capture():
             # Save image to file.
             filename = os.path.join(config.TRAINING_DIR + CAPTURE_DIR, '%03d.pgm' % count)
             cv2.imwrite(filename, crop)
-            print 'Found face and wrote training image', filename
+            print('Found face and wrote training image', filename)
             count += 1
         except KeyboardInterrupt:
             camera.stop()
@@ -93,7 +92,7 @@ def convert():
         # Get coordinates of single face in captured image.
         result = face.detect_single(image)
         if result is None:
-            print 'Could not detect single face!'
+            print('Could not detect single face!')
             continue
         x, y, w, h = result
         # Crop image as close as possible to desired face aspect ratio.
@@ -102,5 +101,5 @@ def convert():
         # Save image to file.
         filename = os.path.join(config.TRAINING_DIR + CAPTURE_DIR, '%03d.pgm' % count)
         cv2.imwrite(filename, crop)
-        print 'Found face and wrote training image', filename
+        print('Found face and wrote training image', filename)
         count += 1

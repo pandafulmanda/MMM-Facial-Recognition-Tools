@@ -7,7 +7,7 @@ Functions to help with the detection and cropping of faces.
 
 import cv2
 
-import config
+import lib.config as config
 
 haar_faces = cv2.CascadeClassifier(config.HAAR_FACES)
 eyeCascade = cv2.CascadeClassifier(config.HAAR_EYES)

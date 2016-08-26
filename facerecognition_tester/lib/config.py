@@ -15,7 +15,7 @@ import syslog
 _platform = platform.system().lower()
 path_to_file = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 
-personen = []
+personen = ['amanda', 'wanjun']
 
 # Edit the values below to configure the training and usage of the
 # face recognition box.
@@ -59,11 +59,11 @@ HAAR_MIN_SIZE_EYES = (20, 20)
 def get_camera():
     syslog.syslog("-" * 20)
     try:
-        import picam
+        import lib.picam as picam
         syslog.syslog("Picam ausgewählt...")
         return picam.OpenCVCapture()
     except Exception:
-        import webcam
+        import lib.webcam as webcam
         syslog.syslog("Webcam ausgewählt...")
         return webcam.OpenCVCapture(device_id=0)
     syslog.syslog("-" * 20)
